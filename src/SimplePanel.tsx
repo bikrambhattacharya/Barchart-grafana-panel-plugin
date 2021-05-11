@@ -5,9 +5,13 @@ import { css } from 'emotion';
 import { SimpleOptions } from 'types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LabelList, ResponsiveContainer } from 'recharts';
 import moment from 'moment/moment';
+interface LegendProps {
+  payload?: any;
+  options: any;
+  onOptionsChange: any;
+}
 
-const CustomizedLegend: React.FC = ({ payload, options, onOptionsChange }) => {
-
+const CustomizedLegend: React.FC<LegendProps> = ({ payload, options, onOptionsChange }) => {
   const styles = getStyles();
   return (
     <div className={styles.legendWrapper}>
@@ -55,35 +59,28 @@ export const SimplePanel: React.FC<Props> = (props) => {
     });
     return formattedData;
   };
-
-  if(props.data.series.length > 7)
-  {
-    return <div className={styles.stacklimit}>Maximum 7 sub-bars allowed at a time</div>
+  if (props.data.series.length > 7) {
+    return <div className={styles.stacklimit}>Maximum 7 sub-bars allowed at a time</div>;
   }
   return (
-      <ResponsiveContainer width={props.width} height={props.height}>
-        <BarChart data={formatData(props.data.series)}>
-          <CartesianGrid />
-          <XAxis dataKey="name" tick={{ fontSize: 10 }} />
-          <YAxis tick={{ fontSize: 10 }} />
-          <Tooltip />
-          <Legend
-            align="left"
-            iconType="line"
-            content={<CustomizedLegend options={props.options} onOptionsChange={props.onOptionsChange} />}
-          />
-          {props.data.series.map((srs, index) => (
-            <Bar
-              key={`${srs.name}-${index}`}
-              dataKey={`${srs.name}`}
-              stackId="stack"
-              fill={props.options?.layers[index]}
-            >
-              <LabelList dataKey={`${srs.name}`} position="middle" />
-            </Bar>
-          ))}
-        </BarChart>
-      </ResponsiveContainer>
+    <ResponsiveContainer width={props.width} height={props.height}>
+      <BarChart data={formatData(props.data.series)}>
+        <CartesianGrid />
+        <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+        <YAxis tick={{ fontSize: 10 }} />
+        <Tooltip />
+        <Legend
+          align="left"
+          iconType="line"
+          content={<CustomizedLegend options={props.options} onOptionsChange={props.onOptionsChange} />}
+        />
+        {props.data.series.map((srs, index) => (
+          <Bar key={`${srs.name}-${index}`} dataKey={`${srs.name}`} stackId="stack" fill={props.options?.layers[index]}>
+            <LabelList dataKey={`${srs.name}`} position="middle" />
+          </Bar>
+        ))}
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
 
@@ -105,7 +102,7 @@ const getStyles = stylesFactory(() => {
       }
     `,
     stacklimit: css`
-    text-align: center;
-    `
+      text-align: center;
+    `,
   };
 });
