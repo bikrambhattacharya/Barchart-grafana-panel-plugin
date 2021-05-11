@@ -40,6 +40,8 @@ interface DataPoint {
 interface Props extends PanelProps<SimpleOptions> {}
 
 export const SimplePanel: React.FC<Props> = (props) => {
+  const styles = getStyles();
+
   const formatData = (input: any[]) => {
     let formattedData: any[] = [];
     input.map((srs) => {
@@ -54,6 +56,10 @@ export const SimplePanel: React.FC<Props> = (props) => {
     return formattedData;
   };
 
+  if(props.data.series.length > 7)
+  {
+    return <div className={styles.stacklimit}>Maximum 7 sub-bars allowed at a time</div>
+  }
   return (
       <ResponsiveContainer width={props.width} height={props.height}>
         <BarChart data={formatData(props.data.series)}>
@@ -98,5 +104,8 @@ const getStyles = stylesFactory(() => {
         border-radius: 0px !important;
       }
     `,
+    stacklimit: css`
+    text-align: center;
+    `
   };
 });

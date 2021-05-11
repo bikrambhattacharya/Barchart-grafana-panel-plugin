@@ -10,7 +10,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
       id: 'layers',
       path: 'layers',
       name: '',
-      defaultValue: [],
+      defaultValue: ['#3F85A5', '#F6C85F', '#6F4E7C', '#9DD866', '#CA472F', '#EE9D55', '#8DDDD0'],
       editor: (props) => {
         return <SimpleEditor {...props} />;
       },
