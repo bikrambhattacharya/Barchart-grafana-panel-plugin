@@ -36,6 +36,16 @@ const CustomizedLegend: React.FC<LegendProps> = ({ payload, options, onOptionsCh
   );
 };
 
+const CustomizedLabelList: React.FC<any> = (props) => {
+  const { x, y, width, height, fontColor, value, fontSize } = props;
+
+  return (
+    <text x={x + width / 2} y={y + height / 2} fill={fontColor} textAnchor="middle" fontSize={fontSize.value}>
+      {value}
+    </text>
+  );
+};
+
 interface DataPoint {
   Time: number;
   Value: number;
@@ -62,6 +72,7 @@ export const SimplePanel: React.FC<Props> = (props) => {
   if (props.data.series.length > 7) {
     return <div className={styles.stacklimit}>Maximum 7 sub-bars allowed at a time</div>;
   }
+
   return (
     <ResponsiveContainer width={props.width} height={props.height}>
       <BarChart data={formatData(props.data.series)}>
@@ -76,7 +87,11 @@ export const SimplePanel: React.FC<Props> = (props) => {
         />
         {props.data.series.map((srs, index) => (
           <Bar key={`${srs.name}-${index}`} dataKey={`${srs.name}`} stackId="stack" fill={props.options?.layers[index]}>
-            <LabelList dataKey={`${srs.name}`} position="middle" />
+            <LabelList
+              dataKey={`${srs.name}`}
+              position="middle"
+              content={<CustomizedLabelList fontColor={props.options.fontColor} fontSize={props.options.fontSize} />}
+            />
           </Bar>
         ))}
       </BarChart>

@@ -7,4 +7,9 @@ export interface SimpleOptions {
   seriesCountSize: SeriesSize;
   color: CircleColor;
   layers: [];
+  fontColor: string;
+  fontSize: {
+    label: string;
+    value: string;
+  };
 }
