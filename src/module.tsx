@@ -18,7 +18,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
       },
     })
     .addCustomEditor({
-      id: 'fontsize',
+      id: 'fontSize',
       path: 'fontSize',
       name: 'Bar Text Size',
       defaultValue: { label: '10', value: 10 },
