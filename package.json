@@ -24,6 +24,7 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
-    "recharts": "^2.0.9"
+    "recharts": "^2.0.9",
+    "tslib": "^2.2.0"
   }
 }
